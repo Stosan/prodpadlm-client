@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prodpadlm_client"
+version = "0.1.1.4"
+authors = [
+  { name="Ayo Kehinde Samuel", email="samkehindeayo@gmail.com" },
+]
+description = "Production LaunchPad for Language Models [Client] - ⚡ Ship Open Source LLMs to production faster and efficiently ⚡"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE.txt"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "httpx",
+  "pydantic-settings",
+  "langchain",
+  "langchain-core",
+]
+
+[project.urls]
+Documentation = "https://readthedocs.org"
+Repository = "https://github.com/Stosan/prodpadlm-client.git"
+Issues = "https://github.com/Stosan/prodpadlm-client/issues"
+Changelog = "https://github.com/Stosan/prodpadlm-client/CHANGELOG.md"
