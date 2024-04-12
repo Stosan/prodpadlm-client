@@ -43,7 +43,7 @@ class ProdPADLM_API:
             temperature: float = 0.7,
             top_k: int = 0,
             top_p: float = 0,
-            stream: Literal[False] | Literal[True] = False,
+            stream: bool = False,
         ) -> Message:
             response = self._post.post(
                 self.url + "/api/v1/generate",
@@ -115,7 +115,7 @@ class ProdPADLM_API:
             temperature: float = 0.7,
             top_k: int = 0,
             top_p: float = 0,
-            stream: Literal[False] | Literal[True] = False,
+            stream: bool = False,
         ) -> Message:
             async with self._post as client:
                 response = await client.post(
