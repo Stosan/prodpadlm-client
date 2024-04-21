@@ -76,8 +76,7 @@ class ProdPADLM_API:
             top_k: int = 0,
             top_p: float = 0,
         ) -> Message:
-            with self._post as client:
-                with client.stream("POST", self.url + "/api/v1/generate",
+            with self._post.stream("POST", self.url + "/api/v1/generate",
                                     json={
                                     "max_tokens": max_tokens,
                                     "messages": messages,
