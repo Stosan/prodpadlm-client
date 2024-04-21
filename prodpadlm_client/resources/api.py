@@ -18,6 +18,25 @@ DEFAULT_CONNECTION_LIMITS = httpx.Limits(
 __all__ = ["MessageParam"]
 
 
+def parse_concatenated_json(string):
+    try:
+        # Attempt to load the string as is (useful if the string is already a valid JSON object or array)
+        return json.loads(string)
+    except json.JSONDecodeError:
+        # If it fails, attempt to find individual JSON objects
+        objects = []
+        remaining = string.strip()
+        while remaining:
+            try:
+                obj, idx = json.JSONDecoder().raw_decode(remaining)
+                objects.append(obj)
+                remaining = remaining[idx:].strip()
+            except json.JSONDecodeError as e:
+                # Unable to parse the remaining string as JSON, break the loop
+                print(f"Error parsing JSON: {e}")
+                break
+        return objects
+
 class MessageParam(TypedDict, total=False):
     content: str
 
@@ -91,8 +110,14 @@ class ProdPADLM_API:
                                 }) as response:
                     for data in response.iter_lines():
                         if data:
-                            with MessageStreamManager(json.loads(data.strip()[6:])["data"]) as msg:
-                                yield msg
+                            # Parse the concatenated JSON string
+                            parsed_objects = parse_concatenated_json(data)
+
+                            # Do something with the parsed objects (for demonstration, just print them)
+                            for obj in parsed_objects:
+                                with MessageStreamManager(obj["data"]) as msg:
+                                    yield msg
+                    
           
          
         
@@ -163,5 +188,10 @@ class ProdPADLM_API:
                                 }) as response:
                     async for data in response.aiter_lines():
                         if data:
-                            with MessageStreamManager(json.loads(data.strip()[6:])["data"]) as msg:
-                                yield msg
+                            # Parse the concatenated JSON string
+                            parsed_objects = parse_concatenated_json(data)
+
+                            # Do something with the parsed objects (for demonstration, just print them)
+                            for obj in parsed_objects:
+                                with MessageStreamManager(obj["data"]) as msg:
+                                    yield msg

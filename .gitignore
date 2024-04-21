@@ -1,6 +1,6 @@
 **__pycache__
 dump.py
-ppenv/
+ppdenv/
 build/
 dist/
 .pytest_cache

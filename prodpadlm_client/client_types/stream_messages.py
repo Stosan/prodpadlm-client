@@ -1,8 +1,7 @@
-from types import TracebackType
-from typing import Callable, Generic, Iterator, List, TypeVar
+from typing import Iterator, List,TYPE_CHECKING
 from prodpadlm_client.client_types._types import *
 from typing_extensions import assert_never
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 
 
@@ -14,6 +13,7 @@ class MessageStream:
    
         
     def __stream_text__(self,stream_data) -> Iterator[str]:
+        print(stream_data)
         if stream_data.type == "content_block_delta" and stream_data.delta.type == "text_delta":
             yield stream_data.delta.text
             
